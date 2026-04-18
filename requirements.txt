@@ -1,0 +1,17 @@
+# Manipulação de Dados
+pandas
+numpy
+
+# Machine Learning & Métricas
+scikit-learn
+xgboost
+scipy
+
+# Explicabilidade & Visualização
+shap
+matplotlib
+seaborn
+
+# Desenvolvimento & Notebooks
+ipykernel
+notebook
