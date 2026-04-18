@@ -14,23 +14,22 @@ def clean_numeric_columns(df: pd.DataFrame) -> pd.DataFrame:
     """
     Remove caracteres indesejados de colunas numéricas e converte os tipos.
     """
-    # Colunas que deveriam ser numéricas mas estão como object
     numeric_cols = ['Age', 'Annual_Income', 'Num_of_Loan', 'Num_of_Delayed_Payment', 
                     'Changed_Credit_Limit', 'Outstanding_Debt', 'Amount_invested_monthly', 
                     'Monthly_Balance']
     
     for col in numeric_cols:
         if col in df.columns:
-            # Substituir strings indesejadas como '_' por NaN
+            # 1. Substituir strings indesejadas como '_' ou vazias por NaN
             df[col] = df[col].replace({'_': np.nan, '': np.nan})
             
-            # Remover caracteres não numéricos (exceto ponto e sinal de menos) e converter
-            if df[col].dtype == 'object':
-                df[col] = df[col].astype(str).str.extract(r'(-?\d+\.?\d*)')[0].astype(float)
+            # 2. Forçar a extração de números (incluindo negativos e decimais)
+            # Ao fazer .astype(str), garantimos que o regex funcionará
+            df[col] = df[col].astype(str).str.extract(r'(-?\d+\.?\d*)')[0].astype(float)
                 
-    # Tratamento de regras de negócio lógicas
-    # Idade não pode ser negativa ou maior que 100
+    # 3. Tratamento de regras de negócio lógicas
     if 'Age' in df.columns:
+        # Idade não pode ser menor que 18 ou maior que 100
         df.loc[(df['Age'] < 18) | (df['Age'] > 100), 'Age'] = np.nan
         
     return df
