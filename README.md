@@ -74,6 +74,8 @@ Este projeto responde:
   Comportamento de pagamento do cliente.
 - Monthly_Balance:
   Saldo mensal disponível do cliente.
+- Credit_Score:
+  Classficação de crédito do cliente. Variável Target
 
 ## ⚙️ Pipeline
 
