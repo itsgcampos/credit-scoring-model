@@ -102,12 +102,6 @@ Este projeto responde:
 - Clientes com maior risco apresentam [exemplo: alta razão dívida/renda]
 - O modelo permite ajustar o threshold para balancear risco vs aprovação
 
-## 🚀 Próximos Passos
-
-- Deploy do modelo
-- Monitoramento (drift e performance)
-- Integração com pipeline de dados
-
 ## 🛠️ Tecnologias
 
 - Python
@@ -115,3 +109,10 @@ Este projeto responde:
 - Scikit-learn
 - XGBoost
 - SHAP
+
+## 🚀 Pipeline do modelo em produção
+
+1. Executar main.py, responsável por ler a base de dados crua, fazer o pré-processamento e gerar a base tratada que treinará o modelo;
+2. Executar src/models/train_model.py que gera o arquivo .pkl que pode ser utilizado em produção pra gerar as predições;
+3. O arquivo src/models/predict.py é responsável por realizar as predições em produção;
+4. Para testes isolados, executar o arquivo test_predict.py
