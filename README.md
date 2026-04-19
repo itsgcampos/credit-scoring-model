@@ -114,4 +114,5 @@ Este projeto responde:
 1. Executar main.py, responsável por ler a base de dados crua, fazer o pré-processamento e gerar a base tratada que treinará o modelo;
 2. Executar src/models/train_model.py que gera o arquivo .pkl que pode ser utilizado em produção pra gerar as predições;
 3. O arquivo src/models/predict.py é responsável por realizar as predições em produção;
-4. Para testes isolados, executar o arquivo test_predict.py
+4. Para testes isolados, executar o arquivo src/models/test_predict.py. O csv dos clientes para realizar a predição, deve ser salvo como o path: data/raw/clients_to_predict.csv.
+   Os resultados estarão presentes em data/predictions/clients_to_predict.csv
