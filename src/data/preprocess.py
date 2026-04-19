@@ -184,13 +184,17 @@ def process_pipeline(df: pd.DataFrame, is_training: bool = True) -> pd.DataFrame
     for col in stable_categorical_cols + dynamic_categorical_cols:
         df[col] = df[col].fillna("Unknown")
 
-    df["target"] = (df["Credit_Score"] == "Poor").astype(int)
+    if is_training:
+        df["target"] = (df["Credit_Score"] == "Poor").astype(int)
 
-    df = df.drop(columns=["ID", "Name", "SSN", "Credit_History_Age", "Credit_Score"])
+    df = df.drop(
+        columns=["ID", "Name", "SSN", "Credit_History_Age", "Credit_Score"],
+        errors="ignore"
+    )
 
     for col in INTEGER_COLUMNS:
         if col in df.columns:
-            df[col] = df[col].round().astype(int)
+            df[col] = pd.to_numeric(df[col], errors="coerce").round().astype("Int64")
 
     ordered_columns = [
         "Customer_ID",
@@ -218,10 +222,9 @@ def process_pipeline(df: pd.DataFrame, is_training: bool = True) -> pd.DataFrame
         "Amount_invested_monthly",
         "Payment_Behaviour",
         "Monthly_Balance",
-        "target",
     ]
-    
+
     if is_training:
-        df["target"] = (df["Credit_Score"] == "Poor").astype(int)
+        ordered_columns.append("target")
 
     return df[ordered_columns]

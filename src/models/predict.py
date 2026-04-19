@@ -30,7 +30,7 @@ def predict_scores(df: pd.DataFrame, artifact_path: str):
     pred = (proba >= threshold).astype(int)
 
     result = df.copy()
-    result["score_default"] = proba
+    result["predict_proba"] = proba
     result["prediction"] = pred
 
     return result

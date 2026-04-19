@@ -28,7 +28,8 @@ def run_test_prediction(input_csv: str, output_csv: str, artifact_path: str) -> 
     predictions = predict_scores(df_features, artifact_path)
 
     for col in reversed(id_cols):
-        predictions.insert(0, col, df_raw[col].values)
+        if col in df_raw.columns and col not in predictions.columns:
+            predictions.insert(0, col, df_raw[col].values)
 
     predictions.to_csv(output_csv, index=False)
     print(f"Predições salvas em: {output_csv}")
