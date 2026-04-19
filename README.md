@@ -94,7 +94,6 @@ Este projeto responde:
 ## 📈 Métricas
 
 - AUC-ROC
-- KS (Kolmogorov-Smirnov)
 - Precision / Recall
 
 ## 💡 Insights de Negócio
