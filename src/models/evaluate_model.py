@@ -11,7 +11,7 @@ from sklearn.metrics import (
 from src.models.predict import prepare_new_data
 
 
-def evaluate_model(df: pd.DataFrame, artifact_path: str):
+def evaluate_model(df: pd.DataFrame, artifact_path: str) -> dict:
     artifact = joblib.load(artifact_path)
 
     target_col = artifact["target_col"]
@@ -26,15 +26,18 @@ def evaluate_model(df: pd.DataFrame, artifact_path: str):
     y_proba = model.predict_proba(X_prepared)[:, 1]
     y_pred = (y_proba >= threshold).astype(int)
 
-    fpr, tpr, thresholds = roc_curve(y_true, y_proba)
+    fpr, tpr, roc_thresholds = roc_curve(y_true, y_proba)
 
     metrics = {
+        "threshold": threshold,
         "roc_auc": roc_auc_score(y_true, y_proba),
-        "classification_report": classification_report(y_true, y_pred, output_dict=True, zero_division=0),
+        "classification_report": classification_report(
+            y_true, y_pred, output_dict=True, zero_division=0
+        ),
         "confusion_matrix": confusion_matrix(y_true, y_pred),
         "fpr": fpr,
         "tpr": tpr,
-        "roc_thresholds": thresholds,
+        "roc_thresholds": roc_thresholds,
         "y_true": y_true,
         "y_pred": y_pred,
         "y_proba": y_proba
