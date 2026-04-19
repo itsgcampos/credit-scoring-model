@@ -1,6 +1,8 @@
+import sys
 from pathlib import Path
-import pandas as pd
+sys.path.append(str(Path(__file__).resolve().parents[2]))
 
+import pandas as pd
 from src.data.preprocess import process_pipeline
 from src.features.build_features import build_features_pipeline
 from src.models.predict import predict_scores
@@ -15,7 +17,7 @@ def run_test_prediction(input_csv: str, output_csv: str, artifact_path: str) -> 
 
     print(f"Base bruta carregada: {df_raw.shape}")
 
-    df_clean = process_pipeline(df_raw)
+    df_clean = process_pipeline(df_raw, is_training=False)
     print(f"Base após preprocessamento: {df_clean.shape}")
 
     df_features = build_features_pipeline(df_clean)

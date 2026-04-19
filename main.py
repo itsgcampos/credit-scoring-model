@@ -6,7 +6,7 @@ from src.features.build_features import build_features_pipeline
 def run_data_pipeline():
     df_raw = load_raw_data("data/raw/credit_score.csv")
 
-    df_clean = process_pipeline(df_raw)
+    df_clean = process_pipeline(df_raw, is_training=True)
     df_clean.to_csv("data/processed/credit_score_clean.csv", index=False)
     print("\nBase tratada salva em 'data/processed/credit_score_clean.csv'")
 

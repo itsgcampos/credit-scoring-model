@@ -123,7 +123,7 @@ def _normalize_type_of_loan(series: pd.Series) -> pd.Series:
     )
 
 
-def process_pipeline(df: pd.DataFrame) -> pd.DataFrame:
+def process_pipeline(df: pd.DataFrame, is_training: bool = True) -> pd.DataFrame:
     """
     Limpa a base bruta de credit scoring e devolve um dataset tratado para uso
     em analise e engenharia de features.
@@ -220,5 +220,8 @@ def process_pipeline(df: pd.DataFrame) -> pd.DataFrame:
         "Monthly_Balance",
         "target",
     ]
+    
+    if is_training:
+        df["target"] = (df["Credit_Score"] == "Poor").astype(int)
 
     return df[ordered_columns]
